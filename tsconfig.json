@@ -4,6 +4,8 @@
     "paths": {
       "core/*": ["core/*"],
       "store/*": ["store/*"],
+      "components/*": ["components/*"],
+      "assets/*": ["assets/*"],
     },
     "target": "es5",
     "lib": [
