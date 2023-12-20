@@ -1,17 +1,8 @@
+import { Position, User } from 'core/types';
+
 export interface TokenResponse {
   success: boolean;
   token: string;
-}
-
-export interface User {
-  id: string;
-  name: string;
-  email: string;
-  phone: string;
-  position: string;
-  position_id: string;
-  registration_timestamp: number;
-  photo: string;
 }
 
 export interface UserResponse {
@@ -30,12 +21,7 @@ export interface UsersResponse {
     next_url: string | null;
     prev_url: string | null;
   };
-  users: User[];
-}
-
-export interface Position {
-  id: number;
-  name: string;
+  users: Array<User>;
 }
 
 export interface PositionsResponse {

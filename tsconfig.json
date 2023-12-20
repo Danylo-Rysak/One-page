@@ -1,6 +1,10 @@
 {
   "compilerOptions": {
-    "baseUrl": "./src",
+    "baseUrl": "src",
+    "paths": {
+      "core/*": ["core/*"],
+      "store/*": ["store/*"],
+    },
     "target": "es5",
     "lib": [
       "dom",

@@ -1,13 +1,12 @@
 import { api } from './axios';
 import {
-  Position,
   PositionsResponse,
   TokenResponse,
-  User,
   UserResponse,
   UsersResponse,
 } from './interfaces';
 import { _count } from './constants';
+import { Position, User } from 'core/types';
 
 export const getToken = async () => {
   try {
@@ -25,12 +24,16 @@ export const getToken = async () => {
 
 export const postUser = async (formData: FormData) => {
   try {
-    const response = await api.post('/users', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
-    return response.data;
+    if (localStorage.getItem('token')) {
+      const response = await api.post('/users', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      return response.data;
+    } else {
+      console.error('Failed to post user. No access');
+    }
   } catch (error) {
     console.error('Error posting user:', error);
     return { success: false, message: 'Error posting user' };
@@ -51,7 +54,7 @@ export const getUserById = async (userId: number): Promise<User | undefined> => 
   }
 };
 
-export const getUsers = async (count = _count) => {
+export const getUsers = async (count = _count): Promise<Array<User> | undefined> => {
   try {
     const response = await api.get<UsersResponse>(`/users?count=${count}`);
     const { success, users } = response.data;
@@ -60,7 +63,7 @@ export const getUsers = async (count = _count) => {
     } else {
       console.error('Users request failed.');
     }
-    return response.data;
+    return users;
   } catch (error) {
     console.error('Error fetching users:', error);
   }
