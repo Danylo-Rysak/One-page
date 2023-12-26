@@ -6,7 +6,7 @@ import {
   UsersResponse,
 } from './interfaces';
 import { _count } from './constants';
-import { Position, User } from 'core/types';
+import { Position, User, UsersInfo } from 'core/types';
 
 export const getToken = async () => {
   try {
@@ -54,16 +54,16 @@ export const getUserById = async (userId: number): Promise<User | undefined> => 
   }
 };
 
-export const getUsers = async (count = _count): Promise<Array<User> | undefined> => {
+export const getUsersInfo = async (count = _count): Promise<UsersInfo | undefined> => {
   try {
     const response = await api.get<UsersResponse>(`/users?count=${count}`);
-    const { success, users } = response.data;
+    const { success, users, total_users } = response.data;
     if (success) {
-      return users;
+      return { users, total_users };
     } else {
       console.error('Users request failed.');
     }
-    return users;
+    return { users, total_users };
   } catch (error) {
     console.error('Error fetching users:', error);
   }

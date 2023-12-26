@@ -9,4 +9,6 @@ export interface WorkerState {
   disabled: boolean;
   loading: boolean;
   error: boolean;
+  success: boolean;
+  error409: boolean;
 }

@@ -6,6 +6,7 @@
       "store/*": ["store/*"],
       "components/*": ["components/*"],
       "assets/*": ["assets/*"],
+      "styles/*": ["styles/*"],
     },
     "target": "es5",
     "lib": [

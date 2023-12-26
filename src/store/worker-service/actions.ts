@@ -5,7 +5,7 @@ import {
   UserFetchUsers,
   UserPostUser,
 } from 'store/action-types';
-import { getPositions, getUserById, getUsers, postUser } from 'core/api/requests';
+import { getPositions, getUserById, getUsersInfo, postUser } from 'core/api/requests';
 
 export const fetchUserById = createAsyncThunk(
   UserFetchUserById,
@@ -15,7 +15,7 @@ export const fetchUserById = createAsyncThunk(
 );
 
 export const fetchUsers = createAsyncThunk(UserFetchUsers, async (count?: number) => {
-  return await getUsers(count);
+  return await getUsersInfo(count);
 });
 
 export const postNewUser = createAsyncThunk(UserPostUser, async (formData: FormData) => {

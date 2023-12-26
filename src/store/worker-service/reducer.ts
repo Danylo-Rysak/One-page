@@ -7,9 +7,13 @@ import {
   postNewUser,
 } from 'store/worker-service/actions';
 import {
+  changeStatusError409Operation,
+  changeSuccessOperation,
   fetchPositionsOperation,
   fetchUserByIdOperation,
-  fetchUsersOperation,
+  fetchUsersErrorOperation,
+  fetchUsersFulfilledOperation,
+  fetchUsersPendingOperation,
   postNewUserOperation,
   showMoreWorkersOperation,
 } from 'store/worker-service/operations';
@@ -23,6 +27,8 @@ const initialState: WorkerState = {
   disabled: false,
   loading: false,
   error: false,
+  success: false,
+  error409: false,
 };
 
 const workerReducer = createSlice({
@@ -30,16 +36,21 @@ const workerReducer = createSlice({
   initialState,
   reducers: {
     showMoreWorkers: showMoreWorkersOperation,
+    changeSuccess: changeSuccessOperation,
+    changeStatusError409: changeStatusError409Operation,
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchUsers.fulfilled, fetchUsersOperation)
+      .addCase(fetchUsers.pending, fetchUsersPendingOperation)
+      .addCase(fetchUsers.fulfilled, fetchUsersFulfilledOperation)
+      .addCase(fetchUsers.rejected, fetchUsersErrorOperation)
       .addCase(fetchUserById.fulfilled, fetchUserByIdOperation)
       .addCase(postNewUser.fulfilled, postNewUserOperation)
       .addCase(fetchPositions.fulfilled, fetchPositionsOperation);
   },
 });
 
-export const { showMoreWorkers } = workerReducer.actions;
+export const { showMoreWorkers, changeSuccess, changeStatusError409 } =
+  workerReducer.actions;
 
 export default workerReducer.reducer;
